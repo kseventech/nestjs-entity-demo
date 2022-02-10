@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import dotenv from 'dotenv'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 dotenv.config()
 
@@ -16,5 +17,6 @@ const typeormConfig: TypeOrmModuleOptions = {
   cli: {
     migrationsDir: 'src/db/migrations',
   },
+  namingStrategy: new SnakeNamingStrategy()
 };
 export default typeormConfig;
