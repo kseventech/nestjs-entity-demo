@@ -18,7 +18,7 @@ export class Location extends BaseEntity{
     @UpdateDateColumn({ type: 'timestamp' })
     updated_at: Date;
 
-    @OneToMany(() => Car, (car) => car.location_id, { onDelete: 'CASCADE' })
+    @OneToMany(() => Car, (car) => car.location, { onDelete: 'CASCADE' })
     cars: Car[]
 
 }

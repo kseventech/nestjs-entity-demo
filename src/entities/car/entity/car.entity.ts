@@ -23,7 +23,7 @@ export class Car extends BaseEntity {
     updated_at: Date;
 
     @ManyToOne(() => Location, (location) => location.cars)
-    location_id: Location
+    location: Location
     
     @ManyToMany(() => Color, (color) => color.id , { onDelete : 'CASCADE'})
     @JoinTable()
