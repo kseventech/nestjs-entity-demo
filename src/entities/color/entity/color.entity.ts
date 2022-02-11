@@ -10,7 +10,7 @@ export class Color extends BaseEntity{
     name: string
 
     @Column({nullable: false})
-    share: string
+    shade: string
 
     @Column({nullable: false})
     brightness: string
