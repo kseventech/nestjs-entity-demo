@@ -1,9 +1,10 @@
+import { Timestamps } from "src/common/entity-timestamps/timestamp";
 import { Color } from "src/entities/color/entity/color.entity";
 import { Location } from "src/entities/location/entity/location.entity";
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
-export class Car extends BaseEntity {
+export class Car extends Timestamps {
     @PrimaryGeneratedColumn('uuid')
     id: number;
 
