@@ -13,12 +13,6 @@ export class Location extends Timestamps{
     @Column({nullable: false})
     city: string
 
-    @CreateDateColumn({ type: 'timestamp' })
-    created_at: Date;
-  
-    @UpdateDateColumn({ type: 'timestamp' })
-    updated_at: Date;
-
     @OneToMany(() => Car, (car) => car.location, { onDelete: 'CASCADE' })
     cars: Car[]
 

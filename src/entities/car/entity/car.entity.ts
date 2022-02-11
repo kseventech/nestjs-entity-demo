@@ -17,12 +17,6 @@ export class Car extends Timestamps {
     @Column({nullable: false})
     engine: string;
 
-    @CreateDateColumn({ type: 'timestamp' })
-    created_at: Date;
-  
-    @UpdateDateColumn({ type: 'timestamp' })
-    updated_at: Date;
-
     @ManyToOne(() => Location, (location) => location.cars)
     location: Location
     

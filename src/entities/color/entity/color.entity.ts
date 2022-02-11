@@ -16,12 +16,6 @@ export class Color extends Timestamps{
     @Column({nullable: false})
     brightness: string
 
-    @CreateDateColumn({ type: 'timestamp' })
-    created_at: Date;
-  
-    @UpdateDateColumn({ type: 'timestamp' })
-    updated_at: Date;
-
     @ManyToMany(() => Car, (car) => car.id, { onDelete: 'CASCADE' })
     cars: Car[]
 }
