@@ -17,6 +17,9 @@ export class Car extends Timestamps {
     @Column({nullable: false})
     engine: string;
 
+    @Column({nullable: true})
+    location_id: string;
+
     @ManyToOne(() => Location, (location) => location.cars, { onDelete: 'CASCADE'})
     location: Location
     
