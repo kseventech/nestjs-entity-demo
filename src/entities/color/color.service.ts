@@ -1,7 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateColorDto } from "./dto/create.color.dto";
+import { UpdateColorDto } from "./dto/update.color.dto";
 import { Color } from "./entity/color.entity";
 
 @Injectable()
@@ -19,14 +20,18 @@ export class ColorService {
     }
 
     async getColorById(id: string) {
-        return await this.colorRepo.findOne({where: {id: id}})
+        const found =  await this.colorRepo.findOne({where: {id}})
+        if(!found) throw new NotFoundException()
+        return found
     }
 
-    async updatecolorById(id: string, createColorDto: CreateColorDto) {
-        return await this.colorRepo.update(id, createColorDto)
+    async updatecolorById(id: string, updateColorDto: UpdateColorDto) {
+        await this.getColorById(id)
+        return await this.colorRepo.update(id, updateColorDto)
     }
 
     async deleteColorById(id: string) {
+        await this.getColorById(id)
         return await this.colorRepo.delete(id)
     }
 }

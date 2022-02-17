@@ -1,5 +1,6 @@
+import { PartialType } from "@nestjs/swagger";
 import { CreateColorDto } from "./create.color.dto";
 
-export class updateColorDto extends CreateColorDto {
+export class UpdateColorDto extends PartialType(CreateColorDto) {
     
 }
