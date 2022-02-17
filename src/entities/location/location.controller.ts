@@ -24,19 +24,19 @@ export class LocationController {
 
     @ApiParam({name: "id", type: "string"})
     @Get("/:id")
-    async getLocationById(@Param() id : string) {
+    async getLocationById(@Param("id") id : string) {
         return await this.locationService.getLocationById(id)
     }
 
     @ApiParam({name: "id", type: "string"})
     @Patch("/:id")
-    async updateLocationById(@Param() id: string , @Body() UpdateLocationDto: UpdateLocationDto) {
+    async updateLocationById(@Param("id") id: string , @Body() UpdateLocationDto: UpdateLocationDto) {
         return await this.locationService.updateLocationById(id, UpdateLocationDto)
     }
 
     @ApiParam({name: "id", type: "string"})
     @Delete("/:id")
-    async deleteLocationById(@Param() id: string) {
+    async deleteLocationById(@Param("id") id: string) {
         return await this.locationService.deleteLocationById(id)
     }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateLocationDto } from "./dto/create.location.dto";
@@ -20,14 +20,19 @@ export class LocationService {
     }
 
     async getLocationById(id: string) {
-        return await this.locationRepo.findOne({where: {id: id}})
+        const found = await this.locationRepo.findOne(id)
+        if(!found) throw new NotFoundException()
+        return found
     }
 
     async updateLocationById(id: string, updateLocationDto: UpdateLocationDto) {
-        return await this.locationRepo.update(id, updateLocationDto)
+        await this.getLocationById(id)
+        const updated = await this.locationRepo.update(id, updateLocationDto)
+        return updated
     }
 
     async deleteLocationById(id: string) {
+        await this.getLocationById(id)
         return await this.locationRepo.delete(id)
     }
 }
