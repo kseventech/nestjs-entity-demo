@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiParam, ApiTags } from "@nestjs/swagger";
 import { CarService } from "./car.service";
-import { CarDto } from "./dto/car.dto";
+import { CreateCarDto } from "./dto/create.car.dto";
+import { UpdateCarDto } from "./dto/update.car.dto";
 
 @ApiTags("car")
 @Controller("car")
@@ -15,6 +16,11 @@ export class CarController {
         return await this.carService.getCar()
     }
 
+    @Post("/")
+    async createCar(@Body() createCarDto: CreateCarDto) {
+        return await this.carService.createCar(createCarDto)
+    }
+
     @ApiParam({ name : "id", type: "string" })
     @Get("/:id")
     async getOneCar(@Param() id : string) {
@@ -23,8 +29,8 @@ export class CarController {
 
     @ApiParam({name: "id" , type: "string"})
     @Patch("/:id")
-    async updateCarById(@Param() id: string, @Body() carDto: CarDto) {
-        return await this.carService.updateCarById(id, carDto)
+    async updateCarById(@Param() id: string, @Body() UpdateCarDto: UpdateCarDto) {
+        return await this.carService.updateCarById(id, UpdateCarDto)
     }
 
     @ApiParam({name: "id" , type: "string"})
