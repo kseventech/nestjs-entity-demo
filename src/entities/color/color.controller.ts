@@ -29,8 +29,8 @@ export class ColorController {
 
     @ApiParam({name: "id", type:"string"})
     @Patch("/:id")
-    async updateColorById(@Param() id: string, @Body() createColorDto: updateColorDto) {
-        return await this.colorService.updatecolorById(id, createColorDto)
+    async updateColorById(@Param() id: string, @Body() updateColorDto: updateColorDto) {
+        return await this.colorService.updatecolorById(id, updateColorDto)
     }
 
     @ApiParam({name: "id", type: "string"})
