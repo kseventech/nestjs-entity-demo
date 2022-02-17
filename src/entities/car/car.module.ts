@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { LocationModule } from "../location/location.module";
 import { CarController } from "./car.controller";
 import { CarService } from "./car.service";
 import { Car } from "./entity/car.entity";
@@ -8,6 +9,6 @@ import { Car } from "./entity/car.entity";
     controllers: [CarController],
     providers: [CarService],
     exports:[],
-    imports:[TypeOrmModule.forFeature([Car])],
+    imports:[TypeOrmModule.forFeature([Car]), LocationModule],
 })
 export class CarModule {}
