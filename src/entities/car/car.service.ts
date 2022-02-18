@@ -12,7 +12,7 @@ export class CarService {
     ) {}
 
     async getCarById(id: string) {
-        const found = await this.carRepo.findOne({ where: { id }, relations: ["location"]})
+        const found = await this.carRepo.findOne({ where: { id }, relations: ["location", "colors"]})
         if(!found) throw new NotFoundException()
         return found
     }
@@ -23,7 +23,7 @@ export class CarService {
     }
 
     async getCar() {
-        return await this.carRepo.find({relations: ["location"]})
+        return await this.carRepo.find({relations: ["location", "colors"]})
     }
 
     async updateCarById(id: string ,UpdateCarDto: UpdateCarDto) {
