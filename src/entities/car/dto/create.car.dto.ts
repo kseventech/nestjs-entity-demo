@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
+import { Color } from 'src/entities/color/entity/color.entity';
+import { Location } from 'src/entities/location/entity/location.entity';
 export class CreateCarDto {
 
     @ApiProperty({ type: 'string', required: true })
@@ -14,7 +16,11 @@ export class CreateCarDto {
     @IsString()
     engine: string
 
-    @ApiProperty({ type: 'string', required: false })
+    @ApiProperty({ type: 'object', required: false })
     @IsOptional()
-    location_id: string
+    location: Location
+
+    @ApiProperty({ type: 'object', isArray: true, required: false })
+    @IsOptional()
+    colors: Color[]
 }
