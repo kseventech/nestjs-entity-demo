@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Connection, Repository } from "typeorm";
 import { CreateCarDto } from "./dto/create.car.dto";
 import { UpdateCarDto } from "./dto/update.car.dto";
 import { Car } from "./entity/car.entity";
@@ -8,7 +8,8 @@ import { Car } from "./entity/car.entity";
 @Injectable()
 export class CarService {
     constructor(
-        @InjectRepository(Car) private carRepo: Repository<Car>
+        @InjectRepository(Car) private carRepo: Repository<Car>,
+        private connection: Connection
     ) {}
 
     async getCarById(id: string) {
@@ -34,5 +35,44 @@ export class CarService {
     async deleteCarById(id: string) {
         await this.getCarById(id)
         return await this.carRepo.delete(id)
+    }
+    
+    async carPurchase() {
+        const queryRunner = this.connection.createQueryRunner()
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        const car1 = queryRunner.manager.create(Car,{
+            engine: "petrol",
+            manufacturer: "bmw",
+            model: "t1"
+        })
+        const car2 = queryRunner.manager.create(Car,{
+            engine: "petrol",
+            manufacturer: "bmw",
+            model: "t2"
+        })
+        try {
+
+            // execute some operations on this transaction:
+            await queryRunner.manager.save(car1);
+            await queryRunner.manager.save(car2);
+        
+            // commit transaction now:
+            await queryRunner.commitTransaction();
+        
+        } catch (err) {
+            console.log("error")
+            console.log(err.message)
+        
+            // since we have errors let's rollback changes we made
+            await queryRunner.rollbackTransaction();
+        
+        } finally {
+        
+            // you need to release query runner which is manually created:
+            await queryRunner.release();
+        }
+        return "transaction has finished"
     }
 }

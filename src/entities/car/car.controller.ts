@@ -39,4 +39,9 @@ export class CarController {
         return await this.carService.deleteCarById(id)
     }
 
+    @Get("/purchase/by-owner")
+    async carPurchase() {
+        return await this.carService.carPurchase()
+    }
+
 }
