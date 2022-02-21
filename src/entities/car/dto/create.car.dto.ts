@@ -18,11 +18,12 @@ export class CreateCarDto {
     @IsString()
     engine: string
 
-    @ApiProperty({ type: LocationDto, required: false })
-    @IsOptional()
-    location: Location
+    @ApiProperty({ type: 'string', required: false })
+    @IsString()
+    location: string
 
-    @ApiProperty({ type: ColorDto, isArray: true, required: false })
-    @IsOptional()
-    colors: Color[]
+    @ApiProperty({ type: 'string', isArray: true, required: false })
+    @IsString({each: true})
+    colors: string[]
+
 }

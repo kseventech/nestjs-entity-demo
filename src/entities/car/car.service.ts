@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Connection, Repository } from "typeorm";
+import { Connection, In, Repository } from "typeorm";
+import { Color } from "../color/entity/color.entity";
+import { Location } from "../location/entity/location.entity";
 import { CreateCarDto } from "./dto/create.car.dto";
 import { UpdateCarDto } from "./dto/update.car.dto";
 import { Car } from "./entity/car.entity";
@@ -9,7 +11,10 @@ import { Car } from "./entity/car.entity";
 export class CarService {
     constructor(
         @InjectRepository(Car) private carRepo: Repository<Car>,
-        private connection: Connection
+        @InjectRepository(Location) private locationRepo: Repository<Location>,
+        @InjectRepository(Color) private colorRepo: Repository<Color>,
+        private connection: Connection,
+
     ) {}
 
     async getCarById(id: string) {
@@ -19,8 +24,18 @@ export class CarService {
     }
 
     async createCar(createCarDto: CreateCarDto) {
-        const created = this.carRepo.create(createCarDto)
-        return await this.carRepo.save(created)
+        const location = await this.locationRepo.findOne({where: {id: createCarDto.location}})
+        if(!location) throw new NotFoundException("Location with given id not found")
+        const colors = await this.colorRepo.find({where: {id: In(createCarDto.colors)}})
+        if(!colors.length) throw new NotFoundException("Colors with given id not found")
+        const car = this.carRepo.create({
+            model: createCarDto.model,
+            manufacturer: createCarDto.manufacturer,
+            engine: createCarDto.engine
+        })
+        car.location = location
+        car.colors = colors
+        return await this.carRepo.save(car)
     }
 
     async getCar() {
@@ -29,7 +44,7 @@ export class CarService {
 
     async updateCarById(id: string ,UpdateCarDto: UpdateCarDto) {
         await this.getCarById(id)
-        return await this.carRepo.update(id, UpdateCarDto)
+        // return await this.carRepo.update(id, UpdateCarDto)
     }
 
     async deleteCarById(id: string) {
