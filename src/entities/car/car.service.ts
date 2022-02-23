@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { InjectPinoLogger, PinoLogger } from "nestjs-pino";
 import { Connection, In, Repository } from "typeorm";
 import { Color } from "../color/entity/color.entity";
 import { Location } from "../location/entity/location.entity";
@@ -10,6 +11,7 @@ import { Car } from "./entity/car.entity";
 @Injectable()
 export class CarService {
     constructor(
+        @InjectPinoLogger(CarService.name) private readonly logger: PinoLogger,
         @InjectRepository(Car) private carRepo: Repository<Car>,
         @InjectRepository(Location) private locationRepo: Repository<Location>,
         @InjectRepository(Color) private colorRepo: Repository<Color>,
@@ -18,6 +20,7 @@ export class CarService {
     ) {}
 
     async getCarById(id: string) {
+        this.logger.info('foo');
         const found = await this.carRepo.findOne({ where: { id }, relations: ["location", "colors"]})
         if(!found) throw new NotFoundException()
         return found

@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LoggerModule } from 'nestjs-pino';
 import typeormConfig from 'ormconfig';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { pinoConfig } from './config/pino.config';
 import { CarModule } from './entities/car/car.module';
 import { Car } from './entities/car/entity/car.entity';
 import { ColorModule } from './entities/color/color.module';
@@ -12,6 +14,7 @@ import { LocationModule } from './entities/location/location.module';
 
 @Module({
   imports: [
+    LoggerModule.forRoot(pinoConfig),
     TypeOrmModule.forRoot(typeormConfig),
     TypeOrmModule.forFeature([Car,Location,Color]),
     CarModule,
