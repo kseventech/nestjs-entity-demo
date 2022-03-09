@@ -11,6 +11,7 @@ import { ColorModule } from './entities/color/color.module';
 import { Color } from './entities/color/entity/color.entity';
 import { Location } from './entities/location/entity/location.entity';
 import { LocationModule } from './entities/location/location.module';
+import { DummyModule } from './entities/dummy/dummy.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { LocationModule } from './entities/location/location.module';
     TypeOrmModule.forFeature([Car,Location,Color]),
     CarModule,
     LocationModule,
-    ColorModule
+    ColorModule,
+    DummyModule
   ],
   
   controllers: [AppController],
