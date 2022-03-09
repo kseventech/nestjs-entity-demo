@@ -38,5 +38,6 @@ export class DummyService {
       {manufacturer: "Volvo",model: "cx60", engine: "diesel", location: locations[3],colors: [colors[0], colors[2]]},
       {manufacturer: "Mazda",model: "3", engine: "petrol", location: locations[1],colors: [colors[1], colors[2]]},
     ]) 
+    return "dummy data created" 
   }
 }
