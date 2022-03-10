@@ -10,7 +10,7 @@ const typeormConfig: TypeOrmModuleOptions = {
   database: process.env.DB_NAME,
   port: 5432,
   username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSOWRD,
+  password: process.env.DB_PASSWORD,
   entities: ['dist/src/**/*.entity.js'],
   synchronize: false,
   migrations: ['dist/src/db/migrations/*.js'],
