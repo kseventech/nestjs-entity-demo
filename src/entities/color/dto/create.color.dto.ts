@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsString } from "class-validator"
+import { IsEmail, IsString, Validate, validate } from "class-validator"
 
 export class CreateColorDto {
     @ApiProperty({required: false})
@@ -13,4 +13,7 @@ export class CreateColorDto {
     @ApiProperty({required: false})
     @IsString()
     brightness: string
+
+    @IsEmail()
+    email: string
 }

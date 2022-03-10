@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from "@nestjs/common";
 import { ApiParam, ApiTags } from "@nestjs/swagger";
 import { ColorService } from "./color.service";
 import { CreateColorDto } from "./dto/create.color.dto";
@@ -18,7 +18,8 @@ export class ColorController {
 
     @Post("/")
     async createColor(@Body() createColorDto: CreateColorDto) {
-        return await this.colorService.createColor(createColorDto)
+        throw new NotFoundException("Notfound")
+        // return await this.colorService.createColor(createColorDto)
     }
 
     @ApiParam({name: "id", type: "string"})
